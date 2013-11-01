@@ -41,6 +41,6 @@ class ChangePasswordType extends AbstractType
      */
     public function getName()
     {
-        return 'nedwave_userbundle_change_password';
+        return 'nedwave_user_change_password';
     }
 }

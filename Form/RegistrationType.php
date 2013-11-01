@@ -43,6 +43,6 @@ class RegistrationType extends AbstractType
      */
     public function getName()
     {
-        return 'nedwave_userbundle_registration';
+        return 'nedwave_user_registration';
     }
 }
