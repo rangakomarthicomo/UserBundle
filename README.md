@@ -8,6 +8,13 @@ Features:
  * Mandrill mailer
  * HWIOAuthBundle integration: facebook, twitter, google login by default
 
+The default routing of this bundle expects the following parameters in parameters.yml, the values are customizable
+
+```
+locale: en
+required_locales: en|nl
+```
+
 
 ## Installation
 
@@ -61,8 +68,24 @@ hwi_oauth:
         confirmation: false
 ```
 
+Update parameters.yml and fill in your app settings
+``` yaml
+locale: en
+required_locales: en|nl
+
+facebook_client_id: <id>
+facebook_client_secret: <secret>
+twitter_client_id: <id>
+twitter_client_secret: <secret>
+google_client_id: <id>
+google_client_secret: <secret>
+```
+
 Update parameters.yml.dist
 ``` yaml
+locale: en
+required_locales: en|nl
+
 facebook_client_id: ~
 facebook_client_secret: ~
 twitter_client_id: ~
