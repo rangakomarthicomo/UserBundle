@@ -23,7 +23,6 @@ class PasswordController extends Controller
      */
     public function changeAction(Request $request)
     {        
-        $em = $this->getDoctrine()->getManager();
         $userManager = $this->get('nedwave_user.user_manager');
         $entity = $userManager->getRepository()->find($this->getUser()->getId());
 
@@ -39,7 +38,7 @@ class PasswordController extends Controller
         
         if ($form->isValid()) {
             $userManager->updatePassword($entity);
-            $em->flush();
+            $userManager->updateUser($entity);
             
             $this->get('session')->getFlashBag()->add('notice', 'password.change.success');
             return $this->redirect($this->generateUrl('user_password_change'));
@@ -56,7 +55,6 @@ class PasswordController extends Controller
      */
     public function resetAction(Request $request, $confirmationToken)
     {
-        $em = $this->getDoctrine()->getManager();
         $userManager = $this->get('nedwave_user.user_manager');
         $entity = $userManager->getRepository()->findOneByConfirmationToken($confirmationToken);
         
@@ -77,10 +75,12 @@ class PasswordController extends Controller
         $form->handleRequest($request);
         
         if ($form->isValid()) {
-            $userManager->updatePassword($entity);
+            $entity->setActive(true);
+            $entity->setConfirmed(true);
             $entity->setConfirmationToken(null);
             $entity->setPasswordRequestedAt(null);
-            $em->flush();
+            $userManager->updatePassword($entity);
+            $userManager->updateUser($entity);
             
             $this->get('session')->getFlashBag()->add('notice', 'password.reset.success');
             
@@ -109,7 +109,6 @@ class PasswordController extends Controller
         if ($form->isValid()) {
             $data = $form->getData();
             
-            $em = $this->getDoctrine()->getManager();
             $userManager = $this->get('nedwave_user.user_manager');
             $entity = $userManager->getRepository()->findOneByEmail($data['email']);
             
@@ -124,7 +123,7 @@ class PasswordController extends Controller
             $entity->setConfirmationToken(base_convert(sha1(uniqid(mt_rand(), true)), 16, 36));
             $entity->setPasswordRequestedAt(new \DateTime());
             
-            $em->flush();
+            $userManager->updateUser($entity);
             
             $dispatcher = $this->get('nedwave_mandrill.dispatcher');
             $template = $this->get('twig')->loadTemplate('NedwaveUserBundle:Email:Password/request.html.twig');

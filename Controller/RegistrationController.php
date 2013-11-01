@@ -35,14 +35,11 @@ class RegistrationController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            
             $userManager->updatePassword($entity);
             $entity->setActive(false);
             $entity->setConfirmationToken(base_convert(sha1(uniqid(mt_rand(), true)), 16, 36));
             
-            $em->persist($entity);
-            $em->flush();
+            $userManager->updateUser($entity);
             
             $dispatcher = $this->get('nedwave_mandrill.dispatcher');
             $template = $this->get('twig')->loadTemplate('NedwaveUserBundle:Email:Registration/register.html.twig');
@@ -81,7 +78,6 @@ class RegistrationController extends Controller
      */
     public function confirmAction($confirmationToken)
     {
-        $em = $this->getDoctrine()->getManager();
         $userManager = $this->get('nedwave_user.user_manager');
         $entity = $userManager->getRepository()->findOneByConfirmationToken($confirmationToken);
         
@@ -95,8 +91,8 @@ class RegistrationController extends Controller
         $entity->setConfirmed(true);
         $entity->setConfirmationToken(null);
         
-        $em->flush();
-        
+        $userManager->updateUser($entity);
+                
         $token = new UsernamePasswordToken($entity, null, $this->container->getParameter('nedwave_user.firewall_name'), $entity->getRoles());
         $this->get('security.context')->setToken($token);
 
