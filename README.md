@@ -5,8 +5,8 @@ User management for Symfony2. Compatible with Doctrine ORM
 
 Features:
 
- * Mandrill mailer
- * HWIOAuthBundle integration: facebook, twitter, google login by default
+ * [MandrillBundle](https://github.com/Nedwave/MandrillBundle) integration
+ * [HWIOAuthBundle](https://github.com/hwi/HWIOAuthBundle) integration: facebook, twitter, google login by default
 
 The default routing of this bundle expects the following parameters in parameters.yml, the values are customizable
 
@@ -25,8 +25,8 @@ Install package with composer
 
 Register bundles in AppKernel
 ``` php
-new Nedwave\MandrillBundle\NedwaveMandrillBundle(),
 new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+new Nedwave\MandrillBundle\NedwaveMandrillBundle(),
 new Nedwave\UserBundle\NedwaveUserBundle(),
 ```
 
