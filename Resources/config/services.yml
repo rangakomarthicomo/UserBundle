@@ -13,3 +13,13 @@ services:
     
     hwi_oauth.account.connector:
         alias: nedwave_user.user_provider
+    
+    nedwave_user.form.change_password:
+        class: Nedwave\UserBundle\Form\ChangePasswordType
+        tags:
+            - { name: form.type, alias: nedwave_user_change_password }
+    
+    nedwave_user.form.registration:
+        class: Nedwave\UserBundle\Form\RegistrationType
+        tags:
+            - { name: form.type, alias: nedwave_user_registration }
