@@ -3,6 +3,11 @@ UserBundle
 
 User management for Symfony2. Compatible with Doctrine ORM
 
+Features:
+
+ * Mandrill mailer
+ * HWIOAuthBundle integration: facebook, twitter, google login by default
+
 
 ## Installation
 
@@ -54,6 +59,16 @@ hwi_oauth:
     
     connect:
         confirmation: false
+```
+
+Update parameters.yml.dist
+``` yaml
+facebook_client_id: ~
+facebook_client_secret: ~
+twitter_client_id: ~
+twitter_client_secret: ~
+google_client_id: ~
+google_client_secret: ~
 ```
 
 Update security.yml
