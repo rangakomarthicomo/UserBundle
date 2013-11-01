@@ -1,0 +1,27 @@
+{% block subject %}Please verify your email address{% endblock %}
+
+{% block body_html %}
+  <p>
+    Hi {{ user.name }},
+  </p>
+  
+  <p>
+    Thank you for registration at our website. Click the link below to verify your email address:<br />
+    <a href="{{ url }}">{{ url }}</a>
+  </p>
+  
+  <p>
+    Kind regards,<br />
+    Webmaster
+  <p>
+{% endblock %}
+
+{% block body_text %}
+    Hi {{ user.name }},
+    
+    Thank you for registration at our website. Click the link below to verify your email address:
+    {{ url }}
+    
+    Kind regards,
+    Webmaster
+{% endblock %}

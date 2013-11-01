@@ -1,0 +1,27 @@
+{% block subject %}Reset your password{% endblock %}
+
+{% block body_html %}
+  <p>
+    Hi {{ user.name }},
+  </p>
+  
+  <p>
+    You have requested a password reset. Click the link below to reset your password:<br />
+    <a href="{{ url }}">{{ url }}</a>
+  </p>
+  
+  <p>
+    Kind regards,<br />
+    Webmaster
+  <p>
+{% endblock %}
+
+{% block body_text %}
+    Hi {{ user.name }},
+    
+    You have requested a password reset. Click the link below to reset your password::
+    {{ url }}
+    
+    Kind regards,
+    Webmaster
+{% endblock %}

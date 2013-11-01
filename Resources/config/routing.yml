@@ -1,0 +1,51 @@
+# Security routes
+login:
+    pattern: /{_locale}/login
+    defaults: { _controller: NedwaveUserBundle:Security:login }
+    requirements:
+        _locale: %required_locales%
+
+login_check:
+    pattern: /login_check
+
+logout:
+    pattern: /{_locale}/logout
+
+# NedwaveUserBundle routes
+user_registration:
+    resource: "@NedwaveUserBundle/Controller/RegistrationController.php"
+    type: annotation
+    prefix: /{_locale}
+    requirements:
+        _locale: %required_locales%
+
+user_password:
+    resource: "@NedwaveUserBundle/Controller/PasswordController.php"
+    type: annotation
+    prefix: /{_locale}
+    requirements:
+        _locale: %required_locales%
+
+# HWIOAuthBundle routes
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /oauth
+    
+hwi_oauth_connect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
+    prefix:   /connect
+
+login_facebook:
+    pattern: /{_locale}/login/facebook
+    requirements:
+        _locale: %required_locales%
+
+login_twitter:
+    pattern: /{_locale}/login/twitter
+    requirements:
+        _locale: %required_locales%
+
+login_google:
+    pattern: /{_locale}/login/google
+    requirements:
+        _locale: %required_locales%

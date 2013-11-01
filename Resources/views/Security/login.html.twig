@@ -1,0 +1,27 @@
+{% trans_default_domain 'NedwaveUserBundle' %}
+
+{% extends "::base.html.twig" %}
+
+{% block title %}NedwaveUserBundle:Security:login{% endblock %}
+
+{% block body %}
+  <h2>{{ 'security.login.title'|trans }}</h2>
+  
+  {% if error %}
+      <p>{{ error.message|trans }}</p>
+  {% endif %}
+  
+  <form action="{{ path('login_check') }}" method="post">
+      <label for="username">{{ 'security.login.username'|trans }}</label>
+      <input type="text" id="username" name="_username" value="{{ last_username }}" />
+  
+      <label for="password">{{ 'security.login.password'|trans }}</label>
+      <input type="password" id="password" name="_password" />
+      
+      <label for="remember">
+          <input id="remember" type="checkbox" name="_remember_me" checked /> {{ 'security.login.remember_me'|trans }}
+      </label>
+  
+      <input type="submit" value="{{ 'security.login.submit'|trans }}" />
+  </form>
+{% endblock body %}

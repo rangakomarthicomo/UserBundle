@@ -1,0 +1,15 @@
+parameters:
+    nedwave_user.user_manager.class: Nedwave\UserBundle\Doctrine\UserManager
+    nedwave_user.user_provider.class: Nedwave\UserBundle\Security\UserProvider
+
+services:
+    nedwave_user.user_manager:
+        class: %nedwave_user.user_manager.class%
+        arguments: [%nedwave_user.user_class%, @doctrine.orm.entity_manager, @security.encoder_factory]
+    
+    nedwave_user.user_provider:
+        class: %nedwave_user.user_provider.class%
+        arguments: [@nedwave_user.user_manager]
+    
+    hwi_oauth.account.connector:
+        alias: nedwave_user.user_provider

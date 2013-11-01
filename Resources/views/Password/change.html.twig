@@ -1,0 +1,24 @@
+{% trans_default_domain 'NedwaveUserBundle' %}
+
+{% extends "::base.html.twig" %}
+
+{% block title %}NedwaveUserBundle:Password:change{% endblock %}
+
+{% block body %}
+  <h2>{{ 'password.change.title'|trans }}</h2>
+  
+  {% for message in app.session.flashbag.get('notice') %}
+      <div class="flash-notice">
+          {{ message|trans }}
+      </div>
+  {% endfor %}
+            
+  {{ form_start(form) }}
+      {{ form_errors(form) }}
+      
+      {{ form_row(form.password.first) }}
+      {{ form_row(form.password.second) }}
+      
+      <input type="submit" value="{{ 'password.change.submit'|trans }}" />
+  {{ form_end(form) }}
+{% endblock %}

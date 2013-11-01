@@ -1,0 +1,10 @@
+{% trans_default_domain 'NedwaveUserBundle' %}
+
+{% extends "::base.html.twig" %}
+
+{% block title %}NedwaveUserBundle:Registration:confirm{% endblock %}
+
+{% block body %}
+  <h2>{{ 'registration.confirm.title'|trans }}</h2>
+  <p>{{ message|trans }}</p>
+{% endblock body %}
