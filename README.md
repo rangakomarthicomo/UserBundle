@@ -73,6 +73,8 @@ Update parameters.yml and fill in your app settings
 locale: en
 required_locales: en|nl
 
+mandrill_api_key: <secret>
+
 facebook_client_id: <id>
 facebook_client_secret: <secret>
 twitter_client_id: <id>
@@ -85,6 +87,8 @@ Update parameters.yml.dist
 ``` yaml
 locale: en
 required_locales: en|nl
+
+mandrill_api_key: ~
 
 facebook_client_id: ~
 facebook_client_secret: ~
