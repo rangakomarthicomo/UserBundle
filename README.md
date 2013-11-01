@@ -18,7 +18,7 @@ Install package with composer
 
 Register bundles in AppKernel
 ``` php
-new Hip\MandrillBundle\HipMandrillBundle(),
+new Nedwave\MandrillBundle\NedwaveMandrillBundle(),
 new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
 new Nedwave\UserBundle\NedwaveUserBundle(),
 ```
@@ -30,7 +30,7 @@ nedwave_user:
     user_class: Nedwave\MainBundle\Entity\User
     firewall_name: main
 
-hip_mandrill:
+nedwave_mandrill:
     api_key: %mandrill_api_key%
     default:
         sender: info@nedwave.com

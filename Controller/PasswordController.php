@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Hip\MandrillBundle\Message;
+use Nedwave\MandrillBundle\Message;
 
 use Nedwave\UserBundle\Form\ChangePasswordType;
 
@@ -126,7 +126,7 @@ class PasswordController extends Controller
             
             $em->flush();
             
-            $dispatcher = $this->get('hip_mandrill.dispatcher');
+            $dispatcher = $this->get('nedwave_mandrill.dispatcher');
             $template = $this->get('twig')->loadTemplate('NedwaveUserBundle:Email:Password/request.html.twig');
             $parameters = array(
                 'user' => $entity,

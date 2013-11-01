@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Hip\MandrillBundle\Message;
+use Nedwave\MandrillBundle\Message;
 
 use Nedwave\UserBundle\Form\RegistrationType;
 
@@ -44,7 +44,7 @@ class RegistrationController extends Controller
             $em->persist($entity);
             $em->flush();
             
-            $dispatcher = $this->get('hip_mandrill.dispatcher');
+            $dispatcher = $this->get('nedwave_mandrill.dispatcher');
             $template = $this->get('twig')->loadTemplate('NedwaveUserBundle:Email:Registration/register.html.twig');
             $parameters = array(
                 'user' => $entity,
