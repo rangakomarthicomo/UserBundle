@@ -10,6 +10,7 @@ use HWI\Bundle\OAuthBundle\Connect\AccountConnectorInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\Exception\AccountNotLinkedException;
 use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
+use Doctrine\ORM\NoResultException;
 
 use Nedwave\UserBundle\Doctrine\UserManager;
 
@@ -56,7 +57,7 @@ class UserProvider implements UserProviderInterface, AccountConnectorInterface, 
 
         try {
             $user = $query->getSingleResult();
-        } catch (\Doctrine\Orm\NoResultException $e) {
+        } catch (NoResultException $e) {
             throw new UsernameNotFoundException();
         }
 
