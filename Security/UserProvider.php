@@ -47,7 +47,7 @@ class UserProvider implements UserProviderInterface, AccountConnectorInterface, 
      */
     public function loadUserByUsername($username)
     {
-        $q = $this->userManager->getRepository()
+        $query = $this->userManager->getRepository()
             ->createQueryBuilder('u')
             ->where('u.username = :username OR u.email = :email')
             ->setParameter('username', $username)
@@ -55,13 +55,9 @@ class UserProvider implements UserProviderInterface, AccountConnectorInterface, 
             ->getQuery();
 
         try {
-            $user = $q->getSingleResult();
-        } catch (NoResultException $e) {
-            $message = sprintf(
-                'Unable to find an active User object identified by "%s".',
-                $username
-            );
-            throw new UsernameNotFoundException($message, 0, $e);
+            $user = $query->getSingleResult();
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            throw new UsernameNotFoundException();
         }
 
         return $user;
