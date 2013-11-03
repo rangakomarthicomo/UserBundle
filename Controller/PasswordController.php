@@ -8,8 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Nedwave\MandrillBundle\Message;
 
-use Nedwave\UserBundle\Form\ChangePasswordType;
-
 /**
  * Password controller.
  *
@@ -30,7 +28,7 @@ class PasswordController extends Controller
             throw $this->createNotFoundException('Unable to find User entity.');
         }
         
-        $form = $this->createForm(new ChangePasswordType(), $entity, array(
+        $form = $this->createForm('nedwave_user_change_password', $entity, array(
             'action' => $this->generateUrl('user_password_change'),
             'method' => 'PUT',
         ));
@@ -68,7 +66,7 @@ class PasswordController extends Controller
             return $this->redirect($this->generateUrl('user_password_request'));
         }
         
-        $form = $this->createForm(new ChangePasswordType(), $entity, array(
+        $form = $this->createForm('nedwave_user_change_password', $entity, array(
             'action' => $this->generateUrl('user_password_reset', array('confirmationToken' => $confirmationToken)),
             'method' => 'PUT',
         ));

@@ -9,6 +9,21 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class ChangePasswordType extends AbstractType
 {
     /**
+     * @var string
+     *
+     * Data class
+     */
+    protected $dataClass;
+    
+    /**
+     * Constructor
+     */
+    public function __construct($dataClass = null)
+    {
+        $this->dataClass = $dataClass;
+    }
+
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -31,7 +46,7 @@ class ChangePasswordType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Nedwave\UserBundle\Entity\User',
+            'data_class' => $this->dataClass,
             'translation_domain' => 'NedwaveUserBundle'
         ));
     }

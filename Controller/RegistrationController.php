@@ -12,8 +12,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Nedwave\MandrillBundle\Message;
 
-use Nedwave\UserBundle\Form\RegistrationType;
-
 /**
  * Registration controller.
  */
@@ -28,7 +26,7 @@ class RegistrationController extends Controller
         $userManager = $this->get('nedwave_user.user_manager');
         $entity = $userManager->createUser();
                 
-        $form = $this->createForm(new RegistrationType(), $entity, array(
+        $form = $this->createForm('nedwave_user_registration', $entity, array(
             'action' => $this->generateUrl('user_registration_register'),
             'method' => 'POST',
         ));
