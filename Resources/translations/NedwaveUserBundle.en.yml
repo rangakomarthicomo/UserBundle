@@ -4,8 +4,8 @@
 security:
     login:
         title: Login
-        username: Email:
-        password: Password:
+        username: Email
+        password: Password
         remember_me: Remember me
         submit: Login
         oauth_user_not_found: No linked account found
@@ -41,10 +41,10 @@ password:
         email_not_found: Email is not found
 
 form:
-    name: Name:
-    email: Email:
+    name: Name
+    email: Email
     password:
-        first: Password:
-        second: Confirm Password:
-        first_new: New Password:
-        second_new: Confirm New Password:
+        first: Password
+        second: Confirm Password
+        first_new: New Password
+        second_new: Confirm New Password

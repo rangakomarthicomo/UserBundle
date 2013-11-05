@@ -4,8 +4,8 @@
 security:
     login:
         title: Inloggen
-        username: E-mail:
-        password: Wachtwoord:
+        username: E-mail
+        password: Wachtwoord
         remember_me: Onthoud mij
         submit: Inloggen
         oauth_user_not_found: Geen gekoppeld account gevonden
@@ -41,10 +41,10 @@ password:
         email_not_found: Het opgegeven e-mailadres is niet gevonden
 
 form:
-    name: Naam:
-    email: E-mail:
+    name: Naam
+    email: E-mail
     password:
-        first: Wachtwoord:
-        second: Bevestig wachtwoord:
-        first_new: Nieuw wachtwoord:
-        second_new: Bevestig nieuw wachtwoord:
+        first: Wachtwoord
+        second: Bevestig wachtwoord
+        first_new: Nieuw wachtwoord
+        second_new: Bevestig nieuw wachtwoord
