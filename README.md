@@ -30,18 +30,39 @@ new Nedwave\MandrillBundle\NedwaveMandrillBundle(),
 new Nedwave\UserBundle\NedwaveUserBundle(),
 ```
 
+Extend the User Entity from the bundle
+``` php
+<?php
+
+namespace Acme\DemoBundle\Entity;
+
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+use Nedwave\UserBundle\Entity\User as BaseUser;
+
+/**
+ * @ORM\Table(name="users")
+ * @ORM\Entity()
+ */
+class User extends BaseUser
+{
+}
+```
+
 Update config.yml
 ``` yaml
 # Nedwave User Bundle
 nedwave_user:
-    user_class: Nedwave\MainBundle\Entity\User
+    user_class: Acme\DemoBundle\Entity\User # Your user class
     firewall_name: main
 
 nedwave_mandrill:
     api_key: %mandrill_api_key%
     default:
-        sender: info@nedwave.com
-        sender_name: Nedwave
+        sender: info@nedwave.com # Your sender e-mail
+        sender_name: Nedwave # Your sender name
 
 hwi_oauth:
     firewall_name: main
@@ -102,7 +123,7 @@ Update security.yml
 ``` yaml
 security:
     encoders:
-        Nedwave\MainBundle\Entity\User: sha512
+        Acme\DemoBundle\Entity\User: sha512 # Your user class
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
