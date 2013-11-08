@@ -88,6 +88,13 @@ class User implements AdvancedUserInterface, \Serializable
     protected $passwordRequestedAt;
     
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="update_password_on_confirmation", type="boolean", nullable=true)
+     */
+    protected $updatePasswordOnConfirmation;
+    
+    /**
      * @var string
      *
      * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
@@ -346,6 +353,29 @@ class User implements AdvancedUserInterface, \Serializable
     public function getPasswordRequestedAt()
     {
         return $this->passwordRequestedAt;
+    }
+
+    /**
+     * Set updatePasswordOnConfirmation
+     *
+     * @param boolean $updatePasswordOnConfirmation
+     * @return User
+     */
+    public function setUpdatePasswordOnConfirmation($updatePasswordOnConfirmation)
+    {
+        $this->updatePasswordOnConfirmation = $updatePasswordOnConfirmation;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatePasswordOnConfirmation
+     *
+     * @return boolean 
+     */
+    public function getUpdatePasswordOnConfirmation()
+    {
+        return $this->updatePasswordOnConfirmation;
     }
 
     /**

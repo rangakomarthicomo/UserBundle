@@ -84,22 +84,51 @@ class RegistrationController extends Controller
                 'message' => 'registration.confirm.token_not_found'
             );
         }
-                
-        $entity->setActive(true);
-        $entity->setConfirmed(true);
-        $entity->setConfirmationToken(null);
         
-        $userManager->updateUser($entity);
-                
-        $token = new UsernamePasswordToken($entity, null, $this->container->getParameter('nedwave_user.firewall_name'), $entity->getRoles());
-        $this->get('security.context')->setToken($token);
+        if ($entity->getUpdatePasswordOnConfirmation()) {
+        
+            $form = $this->createForm('nedwave_user_change_password', $entity, array(
+                'action' => $this->generateUrl('user_registration_confirm', array('confirmationToken' => $confirmationToken)),
+                'method' => 'POST',
+            ));
+            $form->handleRequest($request);
+            
+            if ($form->isValid()) {
+                $entity->setActive(true);
+                $entity->setConfirmed(true);
+                $entity->setConfirmationToken(null);
+                $entity->getUpdatePasswordOnConfirmation(null);
 
-        $event = new InteractiveLoginEvent($this->getRequest(), $token);
-        $this->get('event_dispatcher')->dispatch('security.interactive_login', $event);
+                $userManager->updatePassword($entity);
+                $userManager->updateUser($entity);
+                
+                return array(
+                    'message' => 'registration.confirm.success'
+                );
+            }
+            
+            return array(
+                'form' => $form->createView()
+            );
+            
+        } else {
         
-        return array(
-            'message' => 'registration.confirm.success'
-        );
+            $entity->setActive(true);
+            $entity->setConfirmed(true);
+            $entity->setConfirmationToken(null);
+            
+            $userManager->updateUser($entity);
+                    
+            $token = new UsernamePasswordToken($entity, null, $this->container->getParameter('nedwave_user.firewall_name'), $entity->getRoles());
+            $this->get('security.context')->setToken($token);
+    
+            $event = new InteractiveLoginEvent($this->getRequest(), $token);
+            $this->get('event_dispatcher')->dispatch('security.interactive_login', $event);
+            
+            return array(
+                'message' => 'registration.confirm.success'
+            );
+        }
     }
 
 }
