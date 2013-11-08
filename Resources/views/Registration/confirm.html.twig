@@ -7,4 +7,15 @@
 {% block body %}
   <h2>{{ 'registration.confirm.title'|trans }}</h2>
   <p>{{ message|trans }}</p>
+  
+  {% if form is defined %}
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+        
+        {{ form_row(form.password.first) }}
+        {{ form_row(form.password.second) }}
+        
+        <input type="submit" value="{{ 'password.reset.submit'|trans }}" />
+    {{ form_end(form) }}
+  {% endif %}
 {% endblock body %}

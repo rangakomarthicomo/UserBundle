@@ -74,7 +74,7 @@ class RegistrationController extends Controller
      * @Route("/confirm/{confirmationToken}", name="user_registration_confirm")
      * @Template()
      */
-    public function confirmAction($confirmationToken)
+    public function confirmAction(Request $request, $confirmationToken)
     {
         $userManager = $this->get('nedwave_user.user_manager');
         $entity = $userManager->getRepository()->findOneByConfirmationToken($confirmationToken);
@@ -108,6 +108,7 @@ class RegistrationController extends Controller
             }
             
             return array(
+                'message' => 'registration.confirm.update_password',
                 'form' => $form->createView()
             );
             
