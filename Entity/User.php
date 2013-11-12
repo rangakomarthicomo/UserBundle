@@ -23,18 +23,18 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
      * @Assert\NotBlank(message="nedwave_user.email.blank")
      * @Assert\Email(message="nedwave_user.email.invalid")
-     * @ORM\Column(name="email", type="string", length=255, unique=true)
      */
     protected $email;
 
     /**
      * @var string
      *
+     * @ORM\Column(name="password", type="string", length=255, nullable=true)
      * @Assert\NotBlank(message="nedwave_user.password.blank")
      * @Assert\Length(min="8", max="64", minMessage="nedwave_user.password.length.min", maxMessage="nedwave_user.password.length.max")
-     * @ORM\Column(name="password", type="string", length=255, nullable=true)
      */
     protected $password;
 

@@ -1,4 +1,7 @@
 nedwave_user:
+    name:
+        blank: Please enter a name
+
     email:
         blank: Please enter a email
         invalid: The email {{ value }} is not a valid email
