@@ -29,6 +29,7 @@ class RegistrationController extends Controller
         $form = $this->createForm('nedwave_user_registration', $entity, array(
             'action' => $this->generateUrl('user_registration_register'),
             'method' => 'POST',
+            'validation_groups' => 'registration'
         ));
         $form->handleRequest($request);
 

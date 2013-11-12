@@ -24,8 +24,8 @@ class User implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
-     * @Assert\NotBlank(message="nedwave_user.email.blank")
-     * @Assert\Email(message="nedwave_user.email.invalid")
+     * @Assert\NotBlank(message="nedwave_user.email.blank", groups={"Default", "registration"})
+     * @Assert\Email(message="nedwave_user.email.invalid", groups={"Default", "registration"})
      */
     protected $email;
 
@@ -33,8 +33,8 @@ class User implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=true)
-     * @Assert\NotBlank(message="nedwave_user.password.blank")
-     * @Assert\Length(min="8", max="64", minMessage="nedwave_user.password.length.min", maxMessage="nedwave_user.password.length.max")
+     * @Assert\NotBlank(message="nedwave_user.password.blank", groups={"registration"})
+     * @Assert\Length(min="8", max="255", minMessage="nedwave_user.password.length.min", maxMessage="nedwave_user.password.length.max", groups={"registration"})
      */
     protected $password;
 
