@@ -82,6 +82,21 @@ class UserProvider implements UserProviderInterface, AccountConnectorInterface, 
         ));
 
         if (null === $user) {
+            if ($email = $response->getEmail()) {
+                $user = $this->userManager->createUser();
+                
+                $user->setName($response->getRealName());
+                $user->setEmail($response->getEmail());
+                
+                $user->setPassword(base_convert(sha1(uniqid(mt_rand(), true)), 16, 36));
+                $user->setActive(true);
+                
+                $this->userManager->updatePassword($user);
+                $this->userManager->updateUser($user);
+                
+                return $user;
+            }
+        
             throw new UsernameNotFoundException('security.login.oauth_user_not_found');
         }
         
