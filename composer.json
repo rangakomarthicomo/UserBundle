@@ -1,5 +1,5 @@
 {
-    "name": "wcoppens/user-bundle",
+    "name": "nedwave/user-bundle",
     "description": "User management for Symfony2. Compatible with Doctrine ORM ",
     "keywords": ["users", "user management", "symfony2"],
     "homepage": "https://github.com/Nedwave/UserBundle",
