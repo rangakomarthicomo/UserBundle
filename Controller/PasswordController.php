@@ -145,7 +145,8 @@ class PasswordController extends Controller
             $this->get('session')->getFlashBag()->add('notice', 'password.request.success');
             
             return array(
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'success' => true
             );
         }
         
