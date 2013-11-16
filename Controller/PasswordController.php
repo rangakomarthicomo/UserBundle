@@ -79,12 +79,11 @@ class PasswordController extends Controller
             $entity->setPasswordRequestedAt(null);
             $userManager->updatePassword($entity);
             $userManager->updateUser($entity);
-            
-            $this->get('session')->getFlashBag()->add('notice', 'password.reset.success');
-            
-            return array(
-                'form' => $form->createView()
-            );
+
+            $token = new UsernamePasswordToken($entity, null, 'main', $entity->getRoles());
+            $this->get('security.context')->setToken($token);
+
+            return $this->container->get('authentication_handler')->onAuthenticationSuccess($request, $token);
         }
         
         return array(
@@ -141,12 +140,14 @@ class PasswordController extends Controller
                 ->setHtml($bodyHtml)
                 ->setText($bodyText);
             $result = $dispatcher->send($message);
-            
-            $this->get('session')->getFlashBag()->add('notice', 'password.request.success');
+
+            //Becomes useless and annoying when not truncating the flashbag...
+            //$this->get('session')->getFlashBag()->add('notice', 'password.request.success');
             
             return array(
                 'form' => $form->createView(),
-                'success' => true
+                'success' => true,
+                'email' => $entity->getEmail()
             );
         }
         
