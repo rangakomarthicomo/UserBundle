@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\MappedSuperclass
- * @UniqueEntity(fields="email", message="nedwave_user.email.already_used")
+ * @UniqueEntity(fields={"username", "email"}, message="nedwave_user.email.already_used", groups={"Default", "registration"})
  */
 class User implements AdvancedUserInterface, \Serializable
 {
