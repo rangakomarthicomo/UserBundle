@@ -63,6 +63,7 @@ class RegistrationController extends Controller
 
             return array(
                 'form'   => $form->createView(),
+                'success' => true
             );
         }
 
@@ -104,7 +105,8 @@ class RegistrationController extends Controller
                 $userManager->updateUser($entity);
                 
                 return array(
-                    'message' => 'registration.confirm.success'
+                    'message' => 'registration.confirm.success',
+                    'success' => true
                 );
             }
             
@@ -128,7 +130,8 @@ class RegistrationController extends Controller
             $this->get('event_dispatcher')->dispatch('security.interactive_login', $event);
             
             return array(
-                'message' => 'registration.confirm.success'
+                'message' => 'registration.confirm.success',
+                'success' => true
             );
         }
     }
