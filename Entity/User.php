@@ -155,7 +155,7 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function setUsername($username)
     {
-        $this->username = $username;
+        $this->username = strtolower($username);
     
         return $this;
     }
@@ -178,8 +178,8 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function setEmail($email)
     {
-        $this->email = $email;
-        $this->username = $email;
+        $this->email = strtolower($email);
+        $this->username = strtolower($email);
         
         return $this;
     }

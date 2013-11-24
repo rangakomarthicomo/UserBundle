@@ -51,8 +51,8 @@ class UserProvider implements UserProviderInterface, AccountConnectorInterface, 
         $query = $this->userManager->getRepository()
             ->createQueryBuilder('u')
             ->where('u.username = :username OR u.email = :email')
-            ->setParameter('username', $username)
-            ->setParameter('email', $username)
+            ->setParameter('username', strtolower($username))
+            ->setParameter('email', strtolower($username))
             ->getQuery();
 
         try {

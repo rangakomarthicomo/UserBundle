@@ -108,7 +108,7 @@ class PasswordController extends Controller
             $data = $form->getData();
             
             $userManager = $this->get('nedwave_user.user_manager');
-            $entity = $userManager->getRepository()->findOneByEmail($data['email']);
+            $entity = $userManager->getRepository()->findOneByEmail(strtolower($data['email']));
             
             if (!$entity) {
                 $this->get('session')->getFlashBag()->add('notice', 'password.request.email_not_found');
