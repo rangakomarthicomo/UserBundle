@@ -16,6 +16,13 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     */
+    protected $name;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="username", type="string", length=255, unique=true, nullable=true)
      */
     protected $username;
@@ -145,6 +152,29 @@ class User implements AdvancedUserInterface, \Serializable
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         $this->active = true;
         $this->roles = array();
+    }
+    
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return User
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
