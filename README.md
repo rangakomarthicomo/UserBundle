@@ -48,6 +48,24 @@ use Nedwave\UserBundle\Entity\User as BaseUser;
  */
 class User extends BaseUser
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }
 ```
 
@@ -166,4 +184,11 @@ security:
         - { path: ^/%locale%/password/request, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/%locale%/password/change, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/%locale%/dashboard, role: IS_AUTHENTICATED_FULLY }
+```
+
+Update routing.yml
+```yml
+nedwave_user:
+    resource: "@NedwaveUserBundle/Resources/config/routing.yml"
+    prefix:   /
 ```
