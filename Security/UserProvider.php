@@ -57,6 +57,9 @@ class UserProvider implements UserProviderInterface, AccountConnectorInterface, 
 
         try {
             $user = $query->getSingleResult();
+            $user->setLastLogin(new \DateTime());
+            $this->userManager->updateUser($user);
+            
         } catch (NoResultException $e) {
             throw new UsernameNotFoundException();
         }
