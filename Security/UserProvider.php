@@ -85,29 +85,35 @@ class UserProvider implements UserProviderInterface, AccountConnectorInterface, 
             if ($email = $response->getEmail()) {
                 $user = $this->userManager->createUser();
                 
-                $user->setName($response->getRealName());
-                $user->setEmail($response->getEmail());
+                $userWithEmail = $this->userManager->getRepository()->findOneBy(array('email' => $response->getEmail());
                 
-                $user->setPassword(base_convert(sha1(uniqid(mt_rand(), true)), 16, 36));
-                $user->setActive(true);
-                        
-                $setResource = 'set' . ucfirst($resourceOwnerName);
-                $setResourceId = $setResource . 'Id';
-                $setResourceAccessToken = $setResource . 'AccessToken';
+                if (!$userWithEmail) {
+                    
+                    $user->setName($response->getRealName());
+                    $user->setEmail($response->getEmail());
+                    
+                    $user->setPassword(base_convert(sha1(uniqid(mt_rand(), true)), 16, 36));
+                    $user->setActive(true);
+                            
+                    $setResource = 'set' . ucfirst($resourceOwnerName);
+                    $setResourceId = $setResource . 'Id';
+                    $setResourceAccessToken = $setResource . 'AccessToken';
+                    
+                    if (null !== $previousUser = $this->userManager->getRepository()->findOneBy(array($resourceOwnerName . 'Id' => $response->getUsername()))) {
+                        $previousUser->$setResourceId(null);
+                        $previousUser->$setResourceAccessToken(null);
+                        $this->userManager->updateUser($previousUser);
+                    }
+                    
+                    $user->$setResourceId($response->getUsername());
+                    $user->$setResourceAccessToken($response->getAccessToken());
+                                    
+                    $this->userManager->updatePassword($user);
+                    $this->userManager->updateUser($user);
+                                    
+                    return $user;
                 
-                if (null !== $previousUser = $this->userManager->getRepository()->findOneBy(array($resourceOwnerName . 'Id' => $response->getUsername()))) {
-                    $previousUser->$setResourceId(null);
-                    $previousUser->$setResourceAccessToken(null);
-                    $this->userManager->updateUser($previousUser);
                 }
-                
-                $user->$setResourceId($response->getUsername());
-                $user->$setResourceAccessToken($response->getAccessToken());
-                                
-                $this->userManager->updatePassword($user);
-                $this->userManager->updateUser($user);
-                                
-                return $user;
             }
         
             throw new UsernameNotFoundException('security.login.oauth_user_not_found');
