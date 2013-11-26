@@ -85,7 +85,7 @@ class UserProvider implements UserProviderInterface, AccountConnectorInterface, 
             if ($email = $response->getEmail()) {
                 $user = $this->userManager->createUser();
                 
-                $userWithEmail = $this->userManager->getRepository()->findOneBy(array('email' => $response->getEmail());
+                $userWithEmail = $this->userManager->getRepository()->findOneBy(array('email' => $response->getEmail()));
                 
                 if (!$userWithEmail) {
                     
