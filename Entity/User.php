@@ -640,7 +640,7 @@ class User implements AdvancedUserInterface, \Serializable
             return $this;
         }
 
-        if (!in_array($role, $this->roles, true)) {
+        if ($this->roles == null || !in_array($role, $this->roles, true)) {
             $this->roles[] = $role;
         }
 
