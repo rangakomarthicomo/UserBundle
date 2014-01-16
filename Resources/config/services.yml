@@ -11,9 +11,6 @@ services:
         class: %nedwave_user.user_provider.class%
         arguments: [@nedwave_user.user_manager]
     
-    hwi_oauth.account.connector:
-        alias: nedwave_user.user_provider
-    
     nedwave_user.form.change_password:
         class: Nedwave\UserBundle\Form\ChangePasswordType
         arguments: [%nedwave_user.user_class%]

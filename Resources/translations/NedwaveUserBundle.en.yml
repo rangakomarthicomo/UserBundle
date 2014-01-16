@@ -8,7 +8,6 @@ security:
         password: Password
         remember_me: Remember me
         submit: Login
-        oauth_user_not_found: No linked account found
 
 registration:
     register:

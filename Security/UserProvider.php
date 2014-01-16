@@ -6,15 +6,10 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
-use HWI\Bundle\OAuthBundle\Connect\AccountConnectorInterface;
-use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
-use HWI\Bundle\OAuthBundle\Security\Core\Exception\AccountNotLinkedException;
-use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
 use Doctrine\ORM\NoResultException;
-
 use Nedwave\UserBundle\Doctrine\UserManager;
 
-class UserProvider implements UserProviderInterface, AccountConnectorInterface, OAuthAwareUserProviderInterface
+class UserProvider implements UserProviderInterface
 {
     /**
      * @var UserManager
@@ -63,96 +58,6 @@ class UserProvider implements UserProviderInterface, AccountConnectorInterface, 
         } catch (NoResultException $e) {
             throw new UsernameNotFoundException();
         }
-
-        return $user;
-    }
-    
-    /**
-     * Loads the user by a given UserResponseInterface object.
-     *
-     * @param UserResponseInterface $response
-     *
-     * @return UserInterface
-     *
-     * @throws UsernameNotFoundException if the user is not found
-     */
-    public function loadUserByOAuthUserResponse(UserResponseInterface $response)
-    {
-        $resourceOwnerName = $response->getResourceOwner()->getName();
-        
-        $user = $this->userManager->getRepository()->findOneBy(array(
-            $resourceOwnerName . 'Id' => $response->getUsername()
-        ));
-
-        if (null === $user) {
-            if ($email = $response->getEmail()) {
-                $user = $this->userManager->createUser();
-                
-                $userWithEmail = $this->userManager->getRepository()->findOneBy(array('email' => $response->getEmail()));
-                
-                if (!$userWithEmail) {
-                    
-                    $user->setName($response->getRealName());
-                    $user->setEmail($response->getEmail());
-                    
-                    $user->setPassword(base_convert(sha1(uniqid(mt_rand(), true)), 16, 36));
-                    $user->setActive(true);
-                            
-                    $setResource = 'set' . ucfirst($resourceOwnerName);
-                    $setResourceId = $setResource . 'Id';
-                    $setResourceAccessToken = $setResource . 'AccessToken';
-                    
-                    if (null !== $previousUser = $this->userManager->getRepository()->findOneBy(array($resourceOwnerName . 'Id' => $response->getUsername()))) {
-                        $previousUser->$setResourceId(null);
-                        $previousUser->$setResourceAccessToken(null);
-                        $this->userManager->updateUser($previousUser);
-                    }
-                    
-                    $user->$setResourceId($response->getUsername());
-                    $user->$setResourceAccessToken($response->getAccessToken());
-                                    
-                    $this->userManager->updatePassword($user);
-                    $this->userManager->updateUser($user);
-                                    
-                    return $user;
-                
-                }
-            }
-        
-            throw new UsernameNotFoundException('security.login.oauth_user_not_found');
-        }
-        
-        $setResourceAccessToken = 'set' . ucfirst($resourceOwnerName) . 'AccessToken';
-        $user->$setResourceAccessToken($response->getAccessToken());
-        $this->userManager->updateUser($user);
-
-        return $user;
-    }
-    
-    /**
-     * Connects the response the the user object.
-     *
-     * @param UserInterface         $user     The user object
-     * @param UserResponseInterface $response The oauth response
-     */
-    public function connect(UserInterface $user, UserResponseInterface $response)
-    {
-        $resourceOwnerName = $response->getResourceOwner()->getName();
-        
-        $setResource = 'set' . ucfirst($resourceOwnerName);
-        $setResourceId = $setResource . 'Id';
-        $setResourceAccessToken = $setResource . 'AccessToken';
-        
-        if (null !== $previousUser = $this->userManager->getRepository()->findOneBy(array($resourceOwnerName . 'Id' => $response->getUsername()))) {
-            $previousUser->$setResourceId(null);
-            $previousUser->$setResourceAccessToken(null);
-            $this->userManager->updateUser($previousUser);
-        }
-        
-        $user->$setResourceId($response->getUsername());
-        $user->$setResourceAccessToken($response->getAccessToken());
-        
-        $this->userManager->updateUser($user);
 
         return $user;
     }

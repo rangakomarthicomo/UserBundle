@@ -8,7 +8,6 @@ security:
         password: Wachtwoord
         remember_me: Onthoud mij
         submit: Inloggen
-        oauth_user_not_found: Geen gekoppeld account gevonden
 
 registration:
     register:
