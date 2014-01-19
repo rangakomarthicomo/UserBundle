@@ -61,6 +61,46 @@ class UserProvider implements UserProviderInterface
 
         return $user;
     }
+    
+    /**
+     * Loads the user for the given Facebook user id.
+     *
+     * This method must throw UsernameNotFoundException if the user is not
+     * found.
+     *
+     * @param string $facebookUserId The Facebook user id
+     * @param string $facebookAccessToken The Facebook access token
+     *
+     * @return UserInterface
+     *
+     * @see UsernameNotFoundException
+     *
+     * @throws UsernameNotFoundException if the user is not found
+     *
+     */
+    public function loadUserByFacebookUserId($facebookUserId, $facebookAccessToken = null)
+    {
+        $query = $this->userManager->getRepository()
+            ->createQueryBuilder('u')
+            ->where('u.facebookUserId = :facebookUserId')
+            ->setParameter('facebookUserId', $facebookUserId)
+            ->getQuery();
+
+        try {
+            $user = $query->getSingleResult();
+            $user->setLastLogin(new \DateTime());
+            
+            if ($facebookAccessToken) {
+                $user->setFacebookAccessToken($facebookAccessToken);
+            }
+            $this->userManager->updateUser($user);
+            
+        } catch (NoResultException $e) {
+            throw new UsernameNotFoundException();
+        }
+
+        return $user;
+    }
 
     /**
      * Refreshes the user for the account interface.
