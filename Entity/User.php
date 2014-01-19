@@ -100,6 +100,20 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="update_password_on_confirmation", type="boolean", nullable=true)
      */
     protected $updatePasswordOnConfirmation;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="facebook_user_id", type="string", length=255, nullable=true)
+     */
+    protected $facebookUserId;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true)
+     */
+    protected $facebookAccessToken;
 
 
     /**
@@ -364,6 +378,52 @@ class User implements AdvancedUserInterface, \Serializable
     public function getUpdatePasswordOnConfirmation()
     {
         return $this->updatePasswordOnConfirmation;
+    }
+
+    /**
+     * Set facebookUserId
+     *
+     * @param string $facebookUserId
+     * @return User
+     */
+    public function setFacebookUserId($facebookUserId)
+    {
+        $this->facebookUserId = $facebookUserId;
+
+        return $this;
+    }
+
+    /**
+     * Get facebookUserId
+     *
+     * @return string 
+     */
+    public function getFacebookUserId()
+    {
+        return $this->facebookUserId;
+    }
+
+    /**
+     * Set facebookAccessToken
+     *
+     * @param string $facebookAccessToken
+     * @return User
+     */
+    public function setFacebookAccessToken($facebookAccessToken)
+    {
+        $this->facebookAccessToken = $facebookAccessToken;
+
+        return $this;
+    }
+
+    /**
+     * Get facebookAccessToken
+     *
+     * @return string 
+     */
+    public function getFacebookAccessToken()
+    {
+        return $this->facebookAccessToken;
     }
     
     /**
