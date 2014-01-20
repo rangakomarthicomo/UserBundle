@@ -3,6 +3,7 @@
 namespace Nedwave\Userbundle\Security;
 
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -96,7 +97,7 @@ class UserProvider implements UserProviderInterface
             $this->userManager->updateUser($user);
             
         } catch (NoResultException $e) {
-            throw new UsernameNotFoundException();
+            throw new AuthenticationException('Facebook User Id could not be found.');
         }
 
         return $user;
